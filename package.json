@@ -2,10 +2,14 @@
   "name": "npm-zone",
   "version": "0.6.0",
   "description": "some useful description",
-  "main": "lib/main.js",
+  "main": "./lib/main.js",
+  "exports": "./lib/main.js",
+  "types": "./lib/main.d.ts",
   "scripts": {
     "build": "tsc -b",
-    "dev": "tsx --watch src/dev.ts"
+    "dev": "tsx --watch src/dev.ts",
+    "prepublishOnly": "npm run build",
+    "test": "echo \"running\""
   },
   "repository": {
     "type": "git",
@@ -29,11 +33,12 @@
   },
   "homepage": "https://github.com/rahulroy0322/npm-zone#readme",
   "devDependencies": {
+    "@types/cli-color": "^2.0.6",
     "@types/node": "^24.0.1",
     "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "dependencies": {
-    "chalk": "^5.4.1"
+    "cli-color": "^2.0.4"
   }
 }

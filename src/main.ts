@@ -1,4 +1,4 @@
-import chalk from "chalk";
+import color from 'cli-color'
 
 const stringify = (msg: unknown): string => {
   if (typeof msg === "string") {
@@ -37,12 +37,12 @@ const stringify = (msg: unknown): string => {
 
 const log = (msg: unknown) => {
   msg = stringify(msg).trim();
-  console.log(`${chalk.dim('"LOG":')} ${msg} ${chalk.dim(':"END"')}`);
+  console.log(`${color.blue('"LOG":')} ${msg} ${color.blue(':"END"')}`);
 };
 const info = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.info(
-    `${chalk.cyan('"LOG":')} ${chalk.cyan.underline(msg)} ${chalk.cyan(
+    `${color.cyan('"LOG":')} ${color.cyan.underline(msg)} ${color.cyan(
       ':"END"'
     )}`
   );
@@ -51,7 +51,7 @@ const info = (msg: unknown) => {
 const warn = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.warn(
-    `${chalk.yellow('"INFO":')} ${chalk.yellow.underline(msg)} ${chalk.yellow(
+    `${color.yellow('"INFO":')} ${color.yellow.underline(msg)} ${color.yellow(
       ':"END"'
     )}`
   );
@@ -59,7 +59,7 @@ const warn = (msg: unknown) => {
 const error = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.error(
-    `${chalk.red('"INFO":')} ${chalk.red.underline(msg)} ${chalk.red(
+    `${color.red('"INFO":')} ${color.red.underline(msg)} ${color.red(
       ':"END"'
     )}`
   );
@@ -68,7 +68,7 @@ const error = (msg: unknown) => {
 const debug = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.debug(
-    `${chalk.magenta.visible('"INFO":')} ${chalk.magenta.visible.underline(msg)} ${chalk.magenta.visible(
+    `${color.magenta('"INFO":')} ${color.magenta.underline(msg)} ${color.magenta(
       ':"END"'
     )}`
   );
@@ -77,7 +77,7 @@ const debug = (msg: unknown) => {
 const success = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.log(
-    `${chalk.green('"INFO":')} ${chalk.green.underline(msg)} ${chalk.green(
+    `${color.green('"INFO":')} ${color.green.underline(msg)} ${color.green(
       ':"END"'
     )}`
   );
