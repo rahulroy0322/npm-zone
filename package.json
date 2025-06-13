@@ -1,6 +1,6 @@
 {
   "name": "npm-zone",
-  "version": "0.6.0",
+  "version": "1.6.0",
   "description": "some useful description",
   "main": "./lib/main.js",
   "exports": "./lib/main.js",
