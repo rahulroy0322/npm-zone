@@ -1,0 +1,39 @@
+{
+  "name": "npm-zone",
+  "version": "0.6.0",
+  "description": "some useful description",
+  "main": "lib/main.js",
+  "scripts": {
+    "build": "tsc -b",
+    "dev": "tsx --watch src/dev.ts"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rahulroy0322/npm-zone.git"
+  },
+  "engines": {
+    "node": ">= 16.14"
+  },
+  "keywords": [
+    "some",
+    "useful",
+    "keyword",
+    "learning",
+    "other",
+    "things"
+  ],
+  "author": "Rahul Roy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rahulroy0322/npm-zone/issues"
+  },
+  "homepage": "https://github.com/rahulroy0322/npm-zone#readme",
+  "devDependencies": {
+    "@types/node": "^24.0.1",
+    "tsx": "^4.20.3",
+    "typescript": "^5.8.3"
+  },
+  "dependencies": {
+    "chalk": "^5.4.1"
+  }
+}
