@@ -1,0 +1,5 @@
+.git*
+tsconfig*
+pnpm*
+src
+node_modules
