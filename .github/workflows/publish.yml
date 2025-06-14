@@ -21,7 +21,7 @@ jobs:
           node-version: 20
 
       - name: Install Npm Packages
-        run: npm ci
+        run: npm i
 
       - name: Test for confiramtion
         run: npm test
@@ -40,7 +40,7 @@ jobs:
           registry-url: https://registry.npmjs.org/
 
       - name: Install Npm Packages
-        run: npm ci
+        run: npm i
 
       - name: Publish to npm
         run: npm publish
