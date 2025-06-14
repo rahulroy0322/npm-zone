@@ -3,6 +3,9 @@ name: Publish NPM Package
 on:
   push:
     branches: [publish]
+    
+permissions:
+  contents: write
 
 jobs:
   publish:
