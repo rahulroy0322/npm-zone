@@ -78,6 +78,8 @@ jobs:
           git config --local user.name "GitHub Action"
           git tag -a "v$VERSION" -m "Release version $VERSION"
           git push origin "v$VERSION"
+        env:
+          GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
     
       # Step 10: Create GitHub Release
     #   - name: Create GitHub Release
