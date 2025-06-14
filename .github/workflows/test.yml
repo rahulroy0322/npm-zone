@@ -19,7 +19,6 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: "20"
-          cache: "npm"
           registry-url: "https://registry.npmjs.org"
 
       # Step 3: Get current version from package.json
