@@ -1,15 +1,16 @@
-import { existsSync } from "node:fs";
-import { setup } from "./setup/main";
-import { rm } from "node:fs/promises";
-import { relative } from "node:path";
+import { existsSync } from 'node:fs';
+import { rm } from 'node:fs/promises';
+import { relative } from 'node:path';
 
-process.argv = ["", "", "project", "ts", "first"];
+import { setup } from './setup/main';
+
+process.argv = ['', '', 'project', 'ts', 'first'];
 
 const DEBUG = false;
 
 const main = async () => {
-  if (!DEBUG && existsSync("first")) {
-    await rm(relative(process.cwd(), "first"), {
+  if (!DEBUG && existsSync('first')) {
+    await rm(relative(process.cwd(), 'first'), {
       recursive: true,
     });
   }

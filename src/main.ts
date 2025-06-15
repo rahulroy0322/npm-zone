@@ -1,27 +1,27 @@
-import color from 'cli-color'
+import color from 'cli-color';
 
 const stringify = (msg: unknown): string => {
-  if (typeof msg === "string") {
+  if (typeof msg === 'string') {
     return msg;
   }
   if (
-    typeof msg === "bigint" ||
-    typeof msg === "boolean" ||
-    typeof msg === "number"
+    typeof msg === 'bigint' ||
+    typeof msg === 'boolean' ||
+    typeof msg === 'number'
   ) {
     return String(msg);
   }
 
   if (msg === null || msg === undefined) {
-    return "";
+    return '';
   }
 
-  if (typeof msg === "object") {
+  if (typeof msg === 'object') {
     msg = Object.entries(msg as object)
       .reduce((acc, [key, val]) => {
         if (val === undefined) {
           return acc;
-        } else if (Array.isArray(val) || typeof val === "object") {
+        } else if (Array.isArray(val) || typeof val === 'object') {
           acc.push(`${key} -> ${stringify(val)}`);
         } else {
           acc.push(`${key} -> ${val}`);
@@ -29,7 +29,7 @@ const stringify = (msg: unknown): string => {
 
         return acc;
       }, [] as string[])
-      .join("\n");
+      .join('\n');
   }
 
   return String(msg);
@@ -89,7 +89,7 @@ const logger = {
   info,
   error,
   debug,
-  success
+  success,
 };
 
 export { logger };

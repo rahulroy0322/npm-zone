@@ -1,13 +1,13 @@
-import { error } from "../utils";
-import { showHelp } from "./help";
-import { project } from "./project/main";
+import { error } from '../utils';
+import { showHelp } from './help';
+import { project } from './project/main';
 
 const commands = {
   help: showHelp,
   project,
 };
 
-const cwd = process.cwd()
+const cwd = process.cwd();
 
 const processSetupCommand = async (args: string[]) => {
   const options = args.slice(3);
@@ -18,14 +18,14 @@ const processSetupCommand = async (args: string[]) => {
     error(`unknown command "${command}"`);
   }
 
-  await commands[command]?.(options,cwd)
+  await commands[command]?.(options, cwd);
 };
 
 const setup = async () => {
   const args = process.argv;
 
   if (args.length === 2) {
-    args.push("help");
+    args.push('help');
   }
   try {
     return await processSetupCommand(args);
