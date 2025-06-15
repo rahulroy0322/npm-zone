@@ -43,6 +43,7 @@ jobs:
           fi
   log-for:
     needs: check
+    runs-on: ubuntu-latest
     steps:
       - name: log
         run: |
