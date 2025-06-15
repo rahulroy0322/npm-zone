@@ -1,0 +1,15 @@
+{
+  "extends": "./tsconfig.base.json",
+  "compilerOptions": {
+    "rootDir": "./cli",
+    "declaration": false,
+    "sourceMap": false,
+    "outDir": "./bin",
+
+    "resolveJsonModule": true,
+
+    "lib": ["ES2022.Array"]
+  },
+  "include": ["cli/**/*.ts"],
+  "exclude": ["node_modules", "lib","src", "bin"]
+}

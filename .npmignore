@@ -2,4 +2,6 @@
 tsconfig*
 pnpm*
 src
+cli
+first
 node_modules

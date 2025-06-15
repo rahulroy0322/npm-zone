@@ -42,7 +42,7 @@ const log = (msg: unknown) => {
 const info = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.info(
-    `${color.cyan('"LOG":')} ${color.cyan.underline(msg)} ${color.cyan(
+    `${color.cyan('"INFO":')} ${color.cyan.underline(msg)} ${color.cyan(
       ':"END"'
     )}`
   );
@@ -51,7 +51,7 @@ const info = (msg: unknown) => {
 const warn = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.warn(
-    `${color.yellow('"INFO":')} ${color.yellow.underline(msg)} ${color.yellow(
+    `${color.yellow('"WARN":')} ${color.yellow.underline(msg)} ${color.yellow(
       ':"END"'
     )}`
   );
@@ -59,7 +59,7 @@ const warn = (msg: unknown) => {
 const error = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.error(
-    `${color.red('"INFO":')} ${color.red.underline(msg)} ${color.red(
+    `${color.red('"ERROR":')} ${color.red.underline(msg)} ${color.red(
       ':"END"'
     )}`
   );
@@ -68,7 +68,7 @@ const error = (msg: unknown) => {
 const debug = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.debug(
-    `${color.magenta('"INFO":')} ${color.magenta.underline(msg)} ${color.magenta(
+    `${color.magenta('"DEBUG":')} ${color.magenta.underline(msg)} ${color.magenta(
       ':"END"'
     )}`
   );
@@ -77,7 +77,7 @@ const debug = (msg: unknown) => {
 const success = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.log(
-    `${color.green('"INFO":')} ${color.green.underline(msg)} ${color.green(
+    `${color.green('"SUCCESS":')} ${color.green.underline(msg)} ${color.green(
       ':"END"'
     )}`
   );

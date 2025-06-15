@@ -5,10 +5,16 @@
   "main": "./lib/main.js",
   "exports": "./lib/main.js",
   "types": "./lib/main.d.ts",
+  "bin": {
+    "setup": "./bin/setup.js"
+  },
   "scripts": {
     "build": "tsc -b",
+    "build:all": "npm run build&&npm run build:cli",
+    "build:cli": "tsc -p tsconfig.cli.json",
     "dev": "tsx --watch src/dev.ts",
-    "prepublishOnly": "npm run build",
+    "dev:cli": "tsx --watch --tsconfig tsconfig.cli.json cli/dev.ts",
+    "prepublishOnly": "npm run build:all",
     "test": "echo \"running\""
   },
   "repository": {
