@@ -3,7 +3,7 @@ name: Publish NPM Package
 on:
   push:
     branches: [publish]
-    
+
 permissions:
   contents: write
 
@@ -17,104 +17,109 @@ jobs:
         with:
           fetch-depth: 0 # Fetch all history for tags
 
-    #   # Step 2: Setup Node.js
-    #   - name: Setup Node.js
-    #     uses: actions/setup-node@v4
-    #     with:
-    #       node-version: "20"
-    #       registry-url: "https://registry.npmjs.org"
+      #   # Step 2: Setup Node.js
+      #   - name: Setup Node.js
+      #     uses: actions/setup-node@v4
+      #     with:
+      #       node-version: "20"
+      #       registry-url: "https://registry.npmjs.org"
 
-    #   # Step 3: Get current version from package.json
-    #   - name: Get package version
-    #     id: package-version
-    #     run: |
-    #       VERSION=$(node -p "require('./package.json').version")
-    #       echo "current-version=$VERSION" >> $GITHUB_OUTPUT
-    #       echo "Current version: $VERSION"
+      #   # Step 3: Get current version from package.json
+      #   - name: Get package version
+      #     id: package-version
+      #     run: |
+      #       VERSION=$(node -p "require('./package.json').version")
+      #       echo "current-version=$VERSION" >> $GITHUB_OUTPUT
+      #       echo "Current version: $VERSION"
 
-    #   # Step 4: Check if version tag already exists
-    #   - name: Check if version tag exists
-    #     id: check-tag
-    #     run: |
-    #       VERSION=${{ steps.package-version.outputs.current-version }}
-    #       if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-    #         echo "tag-exists=true" >> $GITHUB_OUTPUT
-    #         echo "Tag v$VERSION already exists"
-    #       else
-    #         echo "tag-exists=false" >> $GITHUB_OUTPUT
-    #         echo "New Version Found v$VERSION - proceeding with publish"
-    #       fi
+      #   # Step 4: Check if version tag already exists
+      #   - name: Check if version tag exists
+      #     id: check-tag
+      #     run: |
+      #       VERSION=${{ steps.package-version.outputs.current-version }}
+      #       if git rev-parse "v$VERSION" >/dev/null 2>&1; then
+      #         echo "tag-exists=true" >> $GITHUB_OUTPUT
+      #         echo "Tag v$VERSION already exists"
+      #       else
+      #         echo "tag-exists=false" >> $GITHUB_OUTPUT
+      #         echo "New Version Found v$VERSION - proceeding with publish"
+      #       fi
 
-    #   # Step 5: Install dependencies
-    #   - name: Install dependencies
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     run: npm i
+      #   # Step 5: Install dependencies
+      #   - name: Install dependencies
+      #     if: steps.check-tag.outputs.tag-exists == 'false'
+      #     run: npm i
 
-    #   # Step 6: Run tests
-    #   - name: Run tests
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     run: npm test
+      #   # Step 6: Run tests
+      #   - name: Run tests
+      #     if: steps.check-tag.outputs.tag-exists == 'false'
+      #     run: npm test
 
-    #   # Step 7: Build package (if build script exists)
-    #   - name: Build package
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     run: |
-    #       if npm run build --if-present; then
-    #         echo "Build completed successfully"
-    #       else
-    #         echo "No build script found or build failed"
-    #       fi
+      #   # Step 7: Build package (if build script exists)
+      #   - name: Build package
+      #     if: steps.check-tag.outputs.tag-exists == 'false'
+      #     run: |
+      #       if npm run build --if-present; then
+      #         echo "Build completed successfully"
+      #       else
+      #         echo "No build script found or build failed"
+      #       fi
 
-    #   # Step 8: Publish to NPM
-    #   - name: Publish to NPM
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     run: npm publish
-    #     env:
-    #       NODE_AUTH_TOKEN: ${{ secrets.TOKEN }}
+      #   # Step 8: Publish to NPM
+      #   - name: Publish to NPM
+      #     if: steps.check-tag.outputs.tag-exists == 'false'
+      #     run: npm publish
+      #     env:
+      #       NODE_AUTH_TOKEN: ${{ secrets.TOKEN }}
 
-    #   # Step 9: Create and push git tag
-    #   - name: Create git tag
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     run: |
-    #       VERSION=${{ steps.package-version.outputs.current-version }}
-    #       git config --local user.email "action@github.com"
-    #       git config --local user.name "GitHub Action"
-    #       git tag -a "v$VERSION" -m "Release version $VERSION"
-    #       git push origin "v$VERSION"
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
-    
+      #   # Step 9: Create and push git tag
+      #   - name: Create git tag
+      #     if: steps.check-tag.outputs.tag-exists == 'false'
+      #     run: |
+      #       VERSION=${{ steps.package-version.outputs.current-version }}
+      #       git config --local user.email "action@github.com"
+      #       git config --local user.name "GitHub Action"
+      #       git tag -a "v$VERSION" -m "Release version $VERSION"
+      #       git push origin "v$VERSION"
+      #     env:
+      #       GITHUB_TOKEN: ${{ secrets.BOT_TOKEN }}
+
       # Step 9: Create and push git tag
       - name: Create git tag
+        id: tag
         run: |
-          VERSION=$(date +'%Y%m%d%H%M%S')          
+          VERSION=$(date +'%Y%m%d%H%M%S')   
+          echo "current-version=$VERSION" >> $GITHUB_OUTPUT       
           git config --local user.email "action[bot]@github.com"
           git config --local user.name "GitHub Action [bot🤖]"
           git tag -a "v$VERSION" -m "🤖: Build Tag (bot) $VERSION"
           git push origin "v$VERSION"
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    
+
       # Step 10: Create GitHub Release
-    #   - name: Create GitHub Release
-    #     if: steps.check-tag.outputs.tag-exists == 'false'
-    #     uses: actions/create-release@v1
-    #     env:
-    #       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    #     with:
-    #       tag_name: v${{ steps.package-version.outputs.current-version }}
-    #       release_name: Release v${{ steps.package-version.outputs.current-version }}
-    #       body: |
-    #         ## Changes in v${{ steps.package-version.outputs.current-version }}
+      - name: Create GitHub Release
+        # if: steps.check-tag.outputs.tag-exists == 'false'
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: v${{ steps.tag.outputs.current-version }}
+          # tag_name: v${{ steps.package-version.outputs.current-version }}
+          release_name: Release v${{ steps.tag.outputs.current-version }}
+          body: |
+            ## Changes in v${{ steps.tag.outputs.current-version }}
 
-    #         Auto-generated release from publish branch.
+            Auto-generated release from publish branch.
+          draft: false
+          prerelease: false
 
-    #         ### Installation
-    #         ```bash
-    #         npm install your-package-name@${{ steps.package-version.outputs.current-version }}
-    #         ```
-    #       draft: false
-    #       prerelease: false
+          #   ### Installation
+          #   ```bash
+          #   npm install your-package-name@${{ steps.tag.outputs.current-version }}
+          #   ```
+          # draft: false
+          # prerelease: false
 
     #   # Step 11: Notify success
     #   - name: Notify success
