@@ -27,7 +27,8 @@ jobs:
       - name: Get package version
         id: pkg-version
         run: |
-          VERSION=$(node -p "require('./package.json').version")
+          VERSION="500" # for debug only
+          # VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Current version: $VERSION"
 
@@ -48,7 +49,7 @@ jobs:
     steps:
       - name: log avobe  VERSION from pkg-version
         run:
-          echo ${{ needs.check.outputs.version }} here
+          echo "${{ needs.check.outputs.version }} here"
   # publish:
   #   needs: build
   #   runs-on: ubuntu-latest
