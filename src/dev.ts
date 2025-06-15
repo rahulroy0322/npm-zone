@@ -1,25 +1,26 @@
-import { logger } from "./main";
+/* eslint-disable no-magic-numbers */
+import { logger } from './main';
 
 const logs = [
-  "some useful log",
+  'some useful log',
   undefined,
   null,
   {
-    msg: "some message",
+    msg: 'some message',
     number: 90,
     bool: true,
     nested: {
-      key: "val",
-      other: "other",
+      key: 'val',
+      other: 'other',
     },
     array: [
-      "some",
-      "val",
+      'some',
+      'val',
       1,
       2,
       3,
       {
-        key: "val",
+        key: 'val',
       },
     ],
     null: null,
@@ -32,5 +33,5 @@ for (const key in logger) {
   for (const log of logs) {
     _log(log);
   }
-  _log("\n");
+  _log('\n');
 }

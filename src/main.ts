@@ -1,27 +1,27 @@
-import color from 'cli-color'
+import color from 'cli-color';
 
 const stringify = (msg: unknown): string => {
-  if (typeof msg === "string") {
+  if (typeof msg === 'string') {
     return msg;
   }
   if (
-    typeof msg === "bigint" ||
-    typeof msg === "boolean" ||
-    typeof msg === "number"
+    typeof msg === 'bigint' ||
+    typeof msg === 'boolean' ||
+    typeof msg === 'number'
   ) {
     return String(msg);
   }
 
   if (msg === null || msg === undefined) {
-    return "";
+    return '';
   }
 
-  if (typeof msg === "object") {
+  if (typeof msg === 'object') {
     msg = Object.entries(msg as object)
       .reduce((acc, [key, val]) => {
         if (val === undefined) {
           return acc;
-        } else if (Array.isArray(val) || typeof val === "object") {
+        } else if (Array.isArray(val) || typeof val === 'object') {
           acc.push(`${key} -> ${stringify(val)}`);
         } else {
           acc.push(`${key} -> ${val}`);
@@ -29,7 +29,7 @@ const stringify = (msg: unknown): string => {
 
         return acc;
       }, [] as string[])
-      .join("\n");
+      .join('\n');
   }
 
   return String(msg);
@@ -42,7 +42,7 @@ const log = (msg: unknown) => {
 const info = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.info(
-    `${color.cyan('"LOG":')} ${color.cyan.underline(msg)} ${color.cyan(
+    `${color.cyan('"INFO":')} ${color.cyan.underline(msg)} ${color.cyan(
       ':"END"'
     )}`
   );
@@ -51,7 +51,7 @@ const info = (msg: unknown) => {
 const warn = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.warn(
-    `${color.yellow('"INFO":')} ${color.yellow.underline(msg)} ${color.yellow(
+    `${color.yellow('"WARN":')} ${color.yellow.underline(msg)} ${color.yellow(
       ':"END"'
     )}`
   );
@@ -59,7 +59,7 @@ const warn = (msg: unknown) => {
 const error = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.error(
-    `${color.red('"INFO":')} ${color.red.underline(msg)} ${color.red(
+    `${color.red('"ERROR":')} ${color.red.underline(msg)} ${color.red(
       ':"END"'
     )}`
   );
@@ -68,7 +68,7 @@ const error = (msg: unknown) => {
 const debug = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.debug(
-    `${color.magenta('"INFO":')} ${color.magenta.underline(msg)} ${color.magenta(
+    `${color.magenta('"DEBUG":')} ${color.magenta.underline(msg)} ${color.magenta(
       ':"END"'
     )}`
   );
@@ -77,7 +77,7 @@ const debug = (msg: unknown) => {
 const success = (msg: unknown) => {
   msg = stringify(msg).trim();
   console.log(
-    `${color.green('"INFO":')} ${color.green.underline(msg)} ${color.green(
+    `${color.green('"SUCCESS":')} ${color.green.underline(msg)} ${color.green(
       ':"END"'
     )}`
   );
@@ -89,7 +89,7 @@ const logger = {
   info,
   error,
   debug,
-  success
+  success,
 };
 
 export { logger };

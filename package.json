@@ -1,15 +1,36 @@
 {
   "name": "npm-zone",
-  "version": "1.6.7",
+  "version": "2.0.0",
   "description": "some useful description",
   "main": "./lib/main.js",
   "exports": "./lib/main.js",
   "types": "./lib/main.d.ts",
+  "bin": {
+    "setup": "./bin/setup.js"
+  },
   "scripts": {
     "build": "tsc -b",
+    "build:all": "npm run build&&npm run build:cli",
+    "build:cli": "tsc -p tsconfig.cli.json",
+    "commitlint": "commitlint --edit",
     "dev": "tsx --watch src/dev.ts",
-    "prepublishOnly": "npm run build",
+    "dev:cli": "tsx --watch --tsconfig tsconfig.cli.json cli/dev.ts",
+    "formate": "prettier ./{src,cli}/**/* --check",
+    "formate:fix": "prettier ./{src,cli}/**/* -w",
+    "lint": "eslint .",
+    "lint:fix": "eslint --fix .",
+    "prepare": "husky",
+    "prepublishOnly": "npm run build:all",
     "test": "echo \"running\""
+  },
+  "lint-staged": {
+    "*.ts": [
+      "prettier -w",
+      "eslint --fix"
+    ],
+    "*.json": [
+      "prettier -w"
+    ]
   },
   "repository": {
     "type": "git",
@@ -33,10 +54,23 @@
   },
   "homepage": "https://github.com/rahulroy0322/npm-zone#readme",
   "devDependencies": {
+    "@commitlint/cli": "^19.8.1",
+    "@commitlint/config-conventional": "^19.8.1",
+    "@commitlint/types": "^19.8.1",
+    "@eslint/js": "^9.29.0",
+    "@eslint/json": "^0.12.0",
+    "@trivago/prettier-plugin-sort-imports": "^5.2.2",
     "@types/cli-color": "^2.0.6",
     "@types/node": "^24.0.1",
+    "eslint": "^9.29.0",
+    "eslint-config-prettier": "^10.1.5",
+    "globals": "^16.2.0",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.1.2",
+    "prettier": "3.5.3",
     "tsx": "^4.20.3",
-    "typescript": "^5.8.3"
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.34.0"
   },
   "dependencies": {
     "cli-color": "^2.0.4"

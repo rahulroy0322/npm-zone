@@ -1,27 +1,10 @@
 {
+  "extends":"./tsconfig.base.json",
   "compilerOptions": {
-    "module": "commonjs",
     "rootDir": "./src",
     "declaration": true,
     "sourceMap": true,
     "outDir": "./lib",
-    "removeComments": true,
-    "noEmitOnError": true,
-    "isolatedModules": true,
-    "esModuleInterop": true,
-    "forceConsistentCasingInFileNames": true,
-
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "noImplicitThis": true,
-    "useUnknownInCatchVariables": true,
-    "noImplicitReturns": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-    "skipLibCheck": true,
-
-    "tsBuildInfoFile": "./node_modules/.tsbuildinfo"
   },
   "include": ["src/**/*.ts"],
   "exclude": ["node_modules", "lib","src/dev.ts"]
