@@ -9,152 +9,41 @@ permissions:
 
 jobs:
   check:
+    outputs:
+      version: ${{ steps.version.outputs.version }}
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
+      - name: Checkout to Github
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0 # Fetch all history for tags
+          fetch-depth: 0
 
-      # Step 2: Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: "20"
           registry-url: "https://registry.npmjs.org"
 
-      # Step 3: Get current version from package.json
       - name: Get package version
-        id: pkg-version
+        id: version
         run: |
-          VERSION="500" # for debug only
-          # VERSION=$(node -p "require('./package.json').version")
+          VERSION=$(node -p "require('./package.json').version")
           echo "version=$VERSION" >> $GITHUB_OUTPUT
           echo "Current version: $VERSION"
 
-      # Step 4: Check if version tag already exists
       - name: Check if version tag exists
         run: |
-          VERSION=${{ steps.pkg-version.outputs.version }}
+          VERSION=${{ steps.version.outputs.version }}
           if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-            echo "Tag v$VERSION already exists"
+            echo "⏭️ Skipping publish - version ${{ steps.version.outputs.version }} already exists"
+            echo "To publish a new version, update the version in package.json first"
             exit 1
           else
             echo "New Version Found v$VERSION - proceeding with publish"
           fi
-
-  publish:
-    runs-on: ubuntu-latest
+  log-for:
     needs: check
     steps:
-      - name: log avobe  VERSION from pkg-version
-        run:
-          echo "${{ needs.check.outputs.version }} here"
-  # publish:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     # Step 1: Checkout the code
-  #     - name: Checkout code
-  #       uses: actions/checkout@v4
-  #       with:
-  #         fetch-depth: 0 # Fetch all history for tags
-
-  #     # Step 2: Setup Node.js
-  #     - name: Setup Node.js
-  #       uses: actions/setup-node@v4
-  #       with:
-  #         node-version: "20"
-  #         registry-url: "https://registry.npmjs.org"
-
-  #     # Step 3: Get current version from package.json
-  #     - name: Get package version
-  #       id: pkg-version
-  #       run: |
-  #         VERSION=$(node -p "require('./package.json').version")
-  #         echo "current-version=$VERSION" >> $GITHUB_OUTPUT
-  #         echo "Current version: $VERSION"
-
-  #     # Step 4: Check if version tag already exists
-  #     - name: Check if version tag exists
-  #       id: check-tag
-  #       run: |
-  #         VERSION=${{ steps.pkg-version.outputs.current-version }}
-  #         if git rev-parse "v$VERSION" >/dev/null 2>&1; then
-  #           echo "tag-exists=true" >> $GITHUB_OUTPUT
-  #           echo "Tag v$VERSION already exists"
-  #         else
-  #           echo "tag-exists=false" >> $GITHUB_OUTPUT
-  #           echo "New Version Found v$VERSION - proceeding with publish"
-  #         fi
-
-  #     # Step 5: Install dependencies
-  #     - name: Install dependencies
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       run: npm i
-
-  #     # Step 6: Run tests
-  #     - name: Run tests
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       run: npm test
-
-  #     # Step 7: Build package (if build script exists)
-  #     - name: Build package
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       run: |
-  #         if npm run build --if-present; then
-  #           echo "Build completed successfully"
-  #         else
-  #           echo "No build script found or build failed"
-  #         fi
-
-          
-  #     # # Step 8: Publish to NPM
-  #     # - name: Publish to NPM
-  #     #   if: steps.check-tag.outputs.tag-exists == 'false'
-  #     #   run: npm publish
-  #     #   env:
-  #     #     NODE_AUTH_TOKEN: ${{ secrets.TOKEN }}
-
-  #     # Step 9: Create and push git tag
-  #     - name: Create git tag
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       run: |
-  #         VERSION=${{ steps.pkg-version.outputs.current-version }}     
-  #         git config --local user.email "action[bot]@github.com"
-  #         git config --local user.name "GitHub Action [bot🤖]"
-  #         git tag -a "v$VERSION" -m "🤖: Build Tag (bot) $VERSION"
-  #         git push origin "v$VERSION"
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  #     # Step 10: Create GitHub Release
-  #     - name: Create GitHub Release
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       uses: actions/create-release@v1
-  #       env:
-  #         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  #       with:
-  #         tag_name: v${{ steps.pkg-version.outputs.current-version }}
-  #         release_name: Release v${{ steps.pkg-version.outputs.current-version }}
-  #         body: |
-  #           ## Changes in v${{ steps.pkg-version.outputs.current-version }}
-
-  #           Auto-generated release from publish branch.
-  #         draft: false
-  #         prerelease: false
-
-  #     # Step 11: Notify success
-  #     - name: Notify success
-  #       if: steps.check-tag.outputs.tag-exists == 'false'
-  #       run: |
-  #         echo "✅ Successfully published version ${{ steps.pkg-version.outputs.current-version }} to NPM"
-  #         echo "✅ Created git tag v${{ steps.pkg-version.outputs.current-version }}"
-  #         echo "✅ Created GitHub release"
-
-  #     # Step 12: Skip if version already exists
-  #     - name: Skip if version exists
-  #       if: steps.check-tag.outputs.tag-exists == 'true'
-  #       run: |
-  #         echo "⏭️ Skipping publish - version ${{ steps.pkg-version.outputs.current-version }} already exists"
-  #         echo "To publish a new version, update the version in package.json first"
+      - name: log
+        run: |
+          echo "the version is ${{ needs.check.outputs.version }} here"
